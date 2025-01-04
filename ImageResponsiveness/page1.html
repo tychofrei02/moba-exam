@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 100px;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .full-width {
+            width: 100vw;
+            height: auto;
+        }
+        nav {
+            margin-top: 20px;
+        }
+        nav a {
+            text-decoration: none;
+            color: blue;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Page 1</h1>
+    <picture>
+        <source srcset="images/img_4032p.jpg" media="(min-width: 2400px)">
+        <source srcset="images/img_2016p.jpg" media="(min-width: 1200px)">
+        <source srcset="images/img_1008p.jpg" media="(min-width: 601px)">
+        <source srcset="images/img_504p.jpg" media="(max-width: 600px)">
+        <img src="images/img_504p.jpg" alt="Responsive Example" class="full-width">
+    </picture>
+    <nav>
+        <a href="page2.html">Go to Page 2</a>
+    </nav>
+</body>
+</html>

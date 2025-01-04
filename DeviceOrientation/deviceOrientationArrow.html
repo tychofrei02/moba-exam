@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Device Orientation Events</title>
+	<style>
+		body {
+			text-align: center;
+			margin: 50px;
+		}
+
+		#arrow {
+			font-size: 200px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="arrow">↑</div>
+	<script>
+		window.addEventListener('deviceorientation', handleOrientation);
+		function handleOrientation(event) {
+			const alpha = event.alpha || 0; 
+			const arrow = document.getElementById('arrow');
+			arrow.style.transform = `rotate(${-alpha}deg)`;
+		}
+	</script>
+</body>
+
+</html>

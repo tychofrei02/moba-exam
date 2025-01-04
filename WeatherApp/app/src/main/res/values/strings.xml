@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    <string name="city">Zurich</string>
+    <string name="weatherDescription">partly cloudy</string>
+    <string name="temperature">%1$.1f°C</string>
+</resources>
