@@ -2,8 +2,10 @@ package ch.grab777.examprep
 
 import android.app.Application
 import android.util.Log
+
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import com.beust.klaxon.Klaxon
 import java.io.BufferedReader
@@ -16,13 +18,13 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
     private val fileName = "questions.json"
     var currentQuestionIndex = mutableIntStateOf(0)
     var mistakes = mutableIntStateOf(0)
+    var selectedAnswer = mutableStateOf("")
+    val openAlertDialog =  mutableStateOf(false)
 
 
     init {
         loadJson()
-        Log.i("JSON", "loaded")
         parseJson()
-        Log.i("JSON", "parsed")
         scrambleQuestionsAndAnswers()
     }
 
@@ -55,6 +57,18 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun checkAnswer() {
-        mistakes.intValue += 1
+        if(selectedAnswer.value == ""){
+            openAlertDialog.value = true
+            return
+        }
+        val correctAnswer =
+            questions[currentQuestionIndex.intValue].a
+                .filter { answer -> answer.isCorrect }[0].text
+        if (selectedAnswer.value == correctAnswer) {
+            currentQuestionIndex.intValue += 1
+            selectedAnswer.value = ""
+        } else {
+            mistakes.intValue += 1
+        }
     }
 }
