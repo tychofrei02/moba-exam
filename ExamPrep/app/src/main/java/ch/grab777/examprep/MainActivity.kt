@@ -1,10 +1,10 @@
 package ch.grab777.examprep
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
@@ -41,26 +41,29 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyApplicationTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    val model: QuestionViewModel by viewModels()
                     Column(Modifier.padding(innerPadding)) {
-                        Title()
+                        Title(text = "Frage x")
                         Column(
                             modifier = Modifier
                                 .padding(8.dp)
                                 .fillMaxHeight(),
                             verticalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Question()
+                            Question(text = model.getCurrentQuestion())
                             RadioButtonSingleSelection(
-                                modifier = Modifier.padding(innerPadding).weight(9f),
-                                options = listOf("1", "2", "3")
+                                modifier = Modifier
+                                    .padding(innerPadding)
+                                    .weight(9f),
+                                options = model.getAnswerTexts()
                             )
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Mistakes()
-                                Button(onClick = { Log.i("button next", "clicked") }, text = "Nächste Frage")
+                                Mistakes(mistakes = model.mistakes.intValue)
+                                Button(onClick = { model.checkAnswer() }, text = "Nächste Frage")
                             }
                         }
                     }
@@ -106,7 +109,7 @@ fun RadioButtonSingleSelection(
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .height(56.dp)
+                    .heightIn(min = 56.dp)
                     .selectable(
                         selected = (text == selectedOption),
                         onClick = { onOptionSelected(text) },
