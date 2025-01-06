@@ -7,11 +7,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
@@ -37,10 +39,17 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val model: QuestionViewModel by viewModels()
                     Column(Modifier.padding(innerPadding)) {
-                        Title(text = "Frage ${model.currentQuestionIndex.intValue + 1}")
+                        Box(
+                            modifier = Modifier
+                                .background(Color.Gray)
+                                .height(48.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Title(text = "Frage ${model.currentQuestionIndex.intValue + 1}")
+                        }
                         Column(
                             modifier = Modifier
-                                .padding(8.dp)
+                                .padding(5.dp)
                                 .fillMaxHeight(),
                             verticalArrangement = Arrangement.SpaceBetween
                         ) {
@@ -95,6 +104,7 @@ fun Title(text: String = "Title") {
             .fillMaxWidth(),
         textAlign = TextAlign.Center,
         fontSize = 24.sp,
+        color = Color.White
     )
 }
 

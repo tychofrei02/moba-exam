@@ -1,6 +1,7 @@
 package ch.grab777.examprep
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 
 import androidx.compose.runtime.mutableIntStateOf
@@ -13,19 +14,32 @@ import java.io.InputStreamReader
 
 class QuestionViewModel(application: Application) : AndroidViewModel(application) {
 
-    var questions = mutableStateListOf<Question>()
+    private var questions = mutableStateListOf<Question>()
     private var jsonString: String = ""
     private val fileName = "questions.json"
     var currentQuestionIndex = mutableIntStateOf(0)
     var mistakes = mutableIntStateOf(0)
     var selectedAnswer = mutableStateOf("")
-    val openAlertDialog =  mutableStateOf(false)
+    val openAlertDialog = mutableStateOf(false)
+    private val answeredQuestions = mutableSetOf<Int>()
 
 
     init {
+        loadPersistedState()
         loadJson()
         parseJson()
         scrambleQuestionsAndAnswers()
+    }
+
+    fun loadPersistedState() {
+        val context = getApplication<Application>().applicationContext
+        val settings = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        currentQuestionIndex.intValue = settings.getInt("CURRENT_QUESTION_INDEX", 0)
+        mistakes.intValue = settings.getInt("MISTAKES", 0)
+        val questions = settings.getStringSet("ANSWERED_QUESTIONS", mutableSetOf<String>())
+        if (questions?.isEmpty() == false) {
+            answeredQuestions.addAll(questions.map { string -> Integer.parseInt(string) })
+        }
     }
 
     private fun loadJson() {
@@ -36,7 +50,15 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun parseJson() {
-        val parsed = Klaxon().parseArray<Question>(jsonString)
+        val parsed = Klaxon().parseArray<Question>(jsonString)?.filter { question ->
+            var validQuestion = true
+            for (answeredQuestion in answeredQuestions) {
+                if (question.id == answeredQuestion) {
+                    validQuestion = false
+                }
+            }
+            validQuestion
+        }
         Log.i("Questions loaded", parsed?.size.toString())
         questions.addAll(parsed!!)
     }
@@ -57,7 +79,7 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun checkAnswer() {
-        if(selectedAnswer.value == ""){
+        if (selectedAnswer.value == "") {
             openAlertDialog.value = true
             return
         }
@@ -65,10 +87,26 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
             questions[currentQuestionIndex.intValue].a
                 .filter { answer -> answer.isCorrect }[0].text
         if (selectedAnswer.value == correctAnswer) {
+            answeredQuestions.add(questions[currentQuestionIndex.intValue].id ?: 0)
+            persist()
             currentQuestionIndex.intValue += 1
             selectedAnswer.value = ""
         } else {
             mistakes.intValue += 1
+            persist()
         }
+    }
+
+    private fun persist() {
+        val context = getApplication<Application>().applicationContext
+        val settings = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val editor = settings.edit()
+        editor.putInt("CURRENT_QUESTION_INDEX", currentQuestionIndex.intValue)
+        editor.putInt("MISTAKES", mistakes.intValue)
+        editor.putStringSet(
+            "ANSWERED_QUESTIONS",
+            answeredQuestions.map { question -> question.toString() }.toSet()
+        )
+        editor.apply()
     }
 }
