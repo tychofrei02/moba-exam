@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
+import androidx.navigation.NavController
 import com.beust.klaxon.Klaxon
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -78,7 +79,7 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
         return questions[currentQuestionIndex.intValue].a.map { answer -> answer.text }
     }
 
-    fun checkAnswer() {
+    fun checkAnswer(navController: NavController) {
         if (selectedAnswer.value == "") {
             openAlertDialog.value = true
             return
@@ -89,6 +90,7 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
         if (selectedAnswer.value == correctAnswer) {
             answeredQuestions.add(questions[currentQuestionIndex.intValue].id ?: 0)
             persist()
+            navController.navigate("success")
             currentQuestionIndex.intValue += 1
             selectedAnswer.value = ""
         } else {

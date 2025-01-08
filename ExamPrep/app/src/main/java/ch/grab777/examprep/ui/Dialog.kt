@@ -17,7 +17,8 @@ fun CustomAlertDialog(
 ) {
     AlertDialog(
         icon = {
-            Icon(icon, contentDescription = "Example Icon")        },
+            Icon(icon, contentDescription = "Example Icon")
+        },
         title = {
             Text(text = dialogTitle)
         },
