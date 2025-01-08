@@ -20,6 +20,6 @@ fun Button(
         onClick = onClick,
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(containerColor = bgColor),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(8.dp),
     ) { Text(text, fontSize = 20.sp) }
 }
