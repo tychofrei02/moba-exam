@@ -9,6 +9,7 @@
 - Manuel Graf (grafman2)
 - Nathan Hess (hessnat1)
 
+
 ## Problem Hypothesis
 
 In Situations (e.g. in a crowded train) where one cannot work or concentrate well, there should be an alternative to spend some time.
