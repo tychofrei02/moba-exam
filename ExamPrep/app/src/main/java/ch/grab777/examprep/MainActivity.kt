@@ -23,12 +23,23 @@ class MainActivity : ComponentActivity() {
             MyApplicationTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val navController = rememberNavController()
-                    val model: QuestionViewModel by viewModels()
+                    val questionViewModel: QuestionViewModel by viewModels()
+                    val successViewModel: SuccessViewModel by viewModels()
                     NavHost(navController = navController, startDestination = "home") {
                         composable("home") {
-                            QuestionScreen(innerPadding, model, navController = navController)
+                            QuestionScreen(
+                                innerPadding,
+                                questionViewModel,
+                                navController = navController
+                            )
                         }
-                        composable("success") { SuccessScreen(innerPadding, navController = navController) }
+                        composable("success") {
+                            SuccessScreen(
+                                innerPadding,
+                                model = successViewModel,
+                                navController = navController
+                            )
+                        }
                     }
 
                 }

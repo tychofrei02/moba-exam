@@ -9,13 +9,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import ch.grab777.examprep.SuccessViewModel
 import ch.grab777.examprep.ui.Button
 
 @Composable
-fun SuccessScreen(innerPadding: PaddingValues, navController: NavController) {
+fun SuccessScreen(
+    innerPadding: PaddingValues,
+    model: SuccessViewModel,
+    navController: NavController
+) {
     Column(
         Modifier
             .padding(innerPadding)
@@ -24,6 +30,21 @@ fun SuccessScreen(innerPadding: PaddingValues, navController: NavController) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(text = "😄 Success!!", fontSize = 40.sp, modifier = Modifier.padding(10.dp))
-        Button(onClick = { navController.popBackStack() }, text = "Next Question")
+        Text(
+            text = "Here's a motivational quote for you:",
+            fontSize = 20.sp,
+            modifier = Modifier.padding(10.dp),
+            textAlign = TextAlign.Center
+        )
+        Text(
+            text = model.currentQuote.value,
+            fontSize = 24.sp,
+            modifier = Modifier.padding(10.dp),
+            textAlign = TextAlign.Center
+        )
+        Button(
+            onClick = { navController.popBackStack(); model.updateQuote() },
+            text = "Next Question"
+        )
     }
 }

@@ -50,6 +50,7 @@ android {
 }
 
 dependencies {
+    implementation (libs.volley)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.klaxon)
