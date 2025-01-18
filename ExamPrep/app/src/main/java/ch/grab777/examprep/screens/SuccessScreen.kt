@@ -18,9 +18,7 @@ import ch.grab777.examprep.ui.Button
 
 @Composable
 fun SuccessScreen(
-    innerPadding: PaddingValues,
-    model: SuccessViewModel,
-    navController: NavController
+    innerPadding: PaddingValues, model: SuccessViewModel, navController: NavController
 ) {
     Column(
         Modifier
@@ -43,8 +41,11 @@ fun SuccessScreen(
             textAlign = TextAlign.Center
         )
         Button(
-            onClick = { navController.popBackStack(); model.updateQuote() },
-            text = "Next Question"
+            onClick = {
+                navController.popBackStack()
+                model.updateQuote()
+                // model.logAllQuotes()
+            }, text = "Next Question"
         )
     }
 }

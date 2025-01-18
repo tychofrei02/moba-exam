@@ -7,4 +7,4 @@ class Answers(val text: String, val isCorrect: Boolean)
 
 
 
-class Quote(val q: String, val a: String, val c: String, val h: String)
+class QuoteBacking(val q: String, val a: String)

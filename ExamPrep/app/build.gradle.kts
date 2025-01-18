@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt") // for SQLite / Room
 }
 
 android {
@@ -30,11 +31,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17 // min v17 needed for Room
+        targetCompatibility = JavaVersion.VERSION_17 // min v17 needed for Room
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17" // min v17 needed for Room
     }
     buildFeatures {
         compose = true
@@ -50,10 +51,13 @@ android {
 }
 
 dependencies {
-    implementation (libs.volley)
+    implementation(libs.androidx.room.runtime)                  // for SQLite / Room
+    annotationProcessor(libs.androidx.room.compiler)            // for SQLite / Room
+    kapt("androidx.room:room-compiler:2.6.1")                   // for SQLite / Room
+    implementation (libs.volley)                                // for internet requests
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.klaxon)
+    implementation(libs.klaxon)                                 // for json parsing
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
