@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questions</title>
+    <script src="web.js"></script>
+</head>
+
+<body>
+    <main>
+        <div class="title">
+            <h1>Frage 1</h1>
+        </div>
+        <div class="question-container">
+            <div class="question">
+                <p id="question">Was is los, mann?</p>
+            </div>
+        </div>
+        <div class="answers">
+            <form action="web_prototype.html" method="post">
+                <div class="answer">
+                    <input type="radio" id="a" name="fav_language" value="HTML">
+                    <label for="a">HTML</label><br>
+                </div>
+                <div class = "answer">
+                    <input type="radio" id="b" name="fav_language" value="CSS">
+                    <label for="b">CSS</label><br>
+                </div>
+                <div class = "answer">
+                    <input type="radio" id="c" name="fav_language" value="JavaScript">
+                    <label for="c">JavaScript</label>
+                </div>
+                <div class = "answer">
+                    <input type="radio" id="d" name="fav_language" value="JavaScript">
+                    <label for="d">JavaScript</label>
+                </div>
+            </form>
+        </div>
+        <div class="bottom">
+            <p>Fehler bisher: 0</p>
+            <button type="submit">Nächste Frage</button>
+        </div>
+    </main>
+</body>

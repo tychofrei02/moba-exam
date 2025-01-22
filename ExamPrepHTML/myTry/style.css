@@ -1,0 +1,42 @@
+/* Styling for the title */
+.title {
+  color: white;
+  background-color: grey;
+  padding: 10px;
+  text-align: center;
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.bottom button {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 15px;
+}
+
+.bottom button:hover {
+  background-color: darkblue;
+}
+
+.answers {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.answer {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+}
